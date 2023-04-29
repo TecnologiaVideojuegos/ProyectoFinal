@@ -1,3 +1,9 @@
+package com.mycompany.javaeat;
+
+import java.awt.Image;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Comida {
     private static final int MAX_NUM_PALABRAS_TITULO = 5;
 
@@ -7,8 +13,10 @@ public class Comida {
     private double precio;
     private Image foto;
     private List<Integer> calificaciones;
+    private String descripcion;
+
     
-    public Comida(int indiceComida, String titulo, String[] [] ingredientes, double precio, Image foto) {
+    public Comida(int indiceComida, String titulo, String[] [] ingredientes, double precio, Image foto, String descripcion) {
         
         if (validarTitulo(titulo)) {
             this.titulo = titulo;
@@ -17,12 +25,13 @@ public class Comida {
             throw new IllegalArgumentException("Título inválido");
         }
  
-        this.calificaciones = new ArrayList<Integer>();        
+        this.calificaciones = new ArrayList<>();        
         this.indiceComida = indiceComida;
         this.titulo = titulo;
         this.ingredientes = ingredientes;
         this.precio = precio;
         this.foto = foto;
+        this.descripcion = descripcion;
     }
 
     public int getIndiceComida() {
@@ -98,6 +107,14 @@ public class Comida {
 
     public void setFoto(Image foto) {
         this.foto = foto;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
 
