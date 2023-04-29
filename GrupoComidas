@@ -1,0 +1,34 @@
+
+package com.mycompany.javaeat;
+
+import java.util.List;
+
+
+public class GrupoComidas {
+    
+    private List<Comida> comidas;
+    private double precioTotal;
+
+    public GrupoComidas(List<Comida> comidas, double precioTotal) {
+        this.comidas = comidas;
+        this.precioTotal = precioTotal;
+    }
+
+    public List<Comida> getComidas() {
+        return comidas;
+    }
+
+    public void setComidas(List<Comida> comidas) {
+        this.comidas = comidas;
+    }
+
+    public double getPrecioTotal() {
+        return precioTotal;
+    }
+
+    public void setPrecioTotal(double precioTotal) {
+        this.precioTotal = precioTotal;
+    }
+
+    
+}
