@@ -1,0 +1,93 @@
+
+package com.mycompany.javaeat;
+
+import java.util.List;
+
+public class Catering {
+    
+    private List<Comida> comidas;
+    private List<GrupoComidas> grupos;
+    private int camareros;
+    private int cocineros;
+    private boolean decoracion;
+    private boolean espacioPrivado;
+    private double precioTotal;
+    private String descripcionComida; 
+    
+    public Catering (double precioTotal, boolean espacioPrivado, boolean decoracion, int cocineros, 
+    int camareros, List<Comida> comidas, List <GrupoComidas> grupos ){
+         
+        if (comidas == null || comidas.isEmpty()){
+            throw new IllegalArgumentException ("Introduzca una comida");
+        } 
+        this.comidas= comidas;
+        this.cocineros = cocineros;
+        this.decoracion = decoracion;
+        this.espacioPrivado = espacioPrivado;
+        this.precioTotal = precioTotal;
+        this.descripcionComida = "";
+        this.grupos = grupos;
+    }
+
+    public List<Comida> getComidas() {
+        return comidas;
+    }
+
+    public void setComidas(List<Comida> comidas) {
+        this.comidas = comidas;
+    }
+
+    public int getCamareros() {
+        return camareros;
+    }
+
+    public void setCamareros(int camareros) {
+        this.camareros = camareros;
+    }
+
+    public int getCocineros() {
+        return cocineros;
+    }
+
+    public void setCocineros(int cocineros) {
+        this.cocineros = cocineros;
+    }
+
+    public boolean esDecoracion() {
+        return decoracion;
+    }
+
+    public void setDecoracion(boolean decoracion) {
+        this.decoracion = decoracion;
+    }
+
+    public boolean esEspacioPrivado() {
+        return espacioPrivado;
+    }
+
+    public void setEspacioPrivado(boolean espacioPrivado) {
+        this.espacioPrivado = espacioPrivado;
+    }
+
+
+    public double calcularPrecioTotal(){
+        
+        double precioComida = 0 ;
+        
+        for (Comida comida : comidas){
+            precioComida+= comida.getPrecio();
+            precioTotal+=comida.getPrecio();
+            descripcionComida += comida.getDescripcion() + ", ";
+        }
+        for (GrupoComidas grupo : grupos){
+            precioComida += grupo.getPrecioTotal();
+        }
+        double precioCamareros = camareros * 800;
+        double precioCocineros = cocineros * 1000;
+        double precioDecoracion = decoracion ? 500 : 0;
+        double precioEspacioPrivado = espacioPrivado ? 1000: 0;
+        
+        precioTotal = precioComida + precioCamareros + precioCocineros + precioDecoracion + precioEspacioPrivado ;
+        return precioTotal;
+    }
+}
