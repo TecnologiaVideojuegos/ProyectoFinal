@@ -1,0 +1,119 @@
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+public class Restaurante {
+    private String nombre;
+    private String CIF;
+    private Comida calificacion;
+    private double gastosEnvio;
+    private Direccion direccion;
+    private Comida especialidad;
+    private LocalDateTime tiempoEnvio;
+    private Catering servicioCatering;
+    private ArrayList<Comida> comidas = new ArrayList<>();
+
+
+    public Restaurante(String nombre, String CIF, Comida calificacion, double gastosEnvio, Direccion direccion, Comida especialidad, LocalDateTime tiempoEnvio, Catering servicioCatering) {
+       
+    if (CIF.matches("[A-HJNP-SUVW]{1}[0-9]{7}[0-9A-J]")) {
+        this.CIF = CIF;
+    } else {
+        throw new IllegalArgumentException("CIF inválido");
+    }
+    
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.CIF= CIF;
+        this.calificacion = null;
+        this.gastosEnvio = 0.0;
+        this.tiempoEnvio = tiempoEnvio;
+        this.servicioCatering = null;
+        this.especialidad = especialidad;
+        this.comidas = new ArrayList<>();
+    }
+                     
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getCIF() {
+        return CIF;
+    }
+
+    public void setCIF(String CIF) {
+        this.CIF = CIF;
+    }
+
+
+    public void setCalificacion(Comida calificacion) {
+            this.calificacion = calificacion;
+        
+    }
+    
+    public double getGastosEnvio() {
+        return gastosEnvio;
+    }
+
+    public void setGastosEnvio(double gastosEnvio) {
+        this.gastosEnvio = gastosEnvio;
+    }
+
+    public Direccion getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
+    }
+
+    public Comida getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(Comida especialidad) {
+        this.especialidad = especialidad;
+    }
+
+    public int tiempoEnvio(){
+        LocalDateTime ahora = LocalDateTime.now();
+        Duration duracion = Duration.between(ahora, tiempoEnvio);
+        long minutos = duracion.toMinutes();
+        return Math.round(minutos);
+    }
+
+    public Catering getServicioCatering() {
+        return servicioCatering;
+    }
+
+    public void setServicioCatering(Catering servicioCatering) {
+        this.servicioCatering = servicioCatering;
+    }
+
+    // Agrega una comida al listado de comidas disponibles
+    
+    public void agregarComida(Comida comida) {
+        int indice = comidas.size();
+        comida.setIndiceComida(indice);
+        comidas.add(comida);
+    }
+
+    // Actualiza la información de una comida existente
+    
+    public void actualizarComida(int indiceComida, Comida comida) {
+        comidas.set(indiceComida, comida);
+    }
+
+    // Elimina una comida del listado de comidas disponibles
+    public void eliminarComida(int indiceComida) {
+        comidas.remove(indiceComida);
+        for (int i = indiceComida; i < comidas.size(); i++) {
+            comidas.get(i).setIndiceComida(i);
+        }
+    }
+}
