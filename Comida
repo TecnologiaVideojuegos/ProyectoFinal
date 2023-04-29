@@ -1,0 +1,104 @@
+public class Comida {
+    private static final int MAX_NUM_PALABRAS_TITULO = 5;
+
+    private int indiceComida;
+    private String titulo;
+    private String[][]  ingredientes;
+    private double precio;
+    private Image foto;
+    private List<Integer> calificaciones;
+    
+    public Comida(int indiceComida, String titulo, String[] [] ingredientes, double precio, Image foto) {
+        
+        if (validarTitulo(titulo)) {
+            this.titulo = titulo;
+            this.calificaciones = new ArrayList<>();
+        } else {
+            throw new IllegalArgumentException("Título inválido");
+        }
+ 
+        this.calificaciones = new ArrayList<Integer>();        
+        this.indiceComida = indiceComida;
+        this.titulo = titulo;
+        this.ingredientes = ingredientes;
+        this.precio = precio;
+        this.foto = foto;
+    }
+
+    public int getIndiceComida() {
+        return indiceComida;
+    }
+
+    public void setIndiceComida(int indiceComida) {
+        this.indiceComida = indiceComida;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+    
+    private boolean validarTitulo(String titulo) {
+        String pattern = "^[A-Za-zñÑáéíóúÁÉÍÓÚ\\s\\p{Punct}]+$";
+        return titulo != null && !titulo.isEmpty()&& titulo.length() >= 3 && titulo.matches(pattern);
+    }
+    
+    public void setTitulo(String titulo) {
+        int numEspacios = titulo.trim().split(" +").length - 1;
+        if (numEspacios >= MAX_NUM_PALABRAS_TITULO) {
+            throw new IllegalArgumentException("El título no puede contener más de " + MAX_NUM_PALABRAS_TITULO + " palabras");
+        }
+        this.titulo = titulo;
+    }
+
+    public String[][] getIngredientes() {
+        return ingredientes;
+    }
+
+    public void setIngredientes(String[][] ingredientes) {
+        if (ingredientes == null) {
+            System.out.println("No ha introducido ningun ingrediente");
+            return;
+        }
+        this.ingredientes = ingredientes;
+}
+
+    private boolean validarCalificacion(int calificacion) {
+        return calificacion >= 0 && calificacion <= 5;
+    }
+    
+    public void introducirCalificacion(int calificacion) {
+        if (validarCalificacion(calificacion)) {
+            calificaciones.add(calificacion);
+        } else {
+            throw new IllegalArgumentException("Calificación inválida");
+        }
+    }
+    public double calcularMediaCalificaciones() {
+        if (calificaciones.isEmpty()) {
+            return 0;
+        }
+        int suma = 0;
+        for (int calificacion : calificaciones) {
+            suma += calificacion;
+        }
+        return (double) suma / calificaciones.size();
+    }   
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public Image getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Image foto) {
+        this.foto = foto;
+    }
+
+
+}
