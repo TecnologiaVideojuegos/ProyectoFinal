@@ -1,0 +1,76 @@
+package com.mycompany.javaeat;
+    
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Pedido {
+    
+    private LocalDateTime fecha;
+    private Restaurante restaurante;
+    private Usuario usuario;
+    private List<ItemPedido> items;
+    private double total;
+    private Direccion direccion;
+
+    public Pedido(LocalDateTime fecha, Restaurante restaurante, Usuario usuario) {
+        this.fecha = fecha;
+        this.restaurante = restaurante;
+        this.usuario = usuario;
+        this.items = new ArrayList<>();
+        this.total = 0;
+    }
+
+    public List<Restaurante> filtrarporCP(List<Restaurante> restaurante, int CP){
+        FiltradorPedidos filtrador_restaurantes = new FiltradorPedidos();
+        return filtrador_restaurantes.filtrarCP(restaurante, CP);
+    }
+    
+    public void agregarItem(ItemPedido item) {
+        items.add(item);
+        total += item.getSubtotal();
+    }
+
+    public LocalDateTime getFecha() {
+        return fecha;
+    }
+
+    public Direccion getDireccon(){
+        return direccion;
+    }
+    public void setDireccion(Direccion direccion){
+        this.direccion= direccion;
+    }
+    public Restaurante getRestaurante() {
+        return restaurante;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public List<ItemPedido> getItems() {
+        return items;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public String generarFactura() {
+        StringBuilder factura = new StringBuilder();
+        factura.append("Fecha: ").append(fecha).append("\n");
+        factura.append("Restaurante: ").append(restaurante.getNombre()).append("\n");
+        factura.append("Dirección: ").append(restaurante.getDireccion()).append("\n");
+        factura.append("Comidas: \n");
+        for (ItemPedido item : items) {
+            factura.append("\t- ").append(item.getComida().getTitulo())
+                   .append(" x ").append(item.getCantidad())
+                   .append(" = ").append(item.getSubtotal()).append("€\n");
+        }
+        factura.append("Total: ").append(total).append("€\n");
+        factura.append("Cliente: ").append(usuario.getNombre()).append("\n");
+        factura.append("Dirección de envío: ").append(usuario.getDireccion()).append("\n");
+        return factura.toString();
+    }
+}
