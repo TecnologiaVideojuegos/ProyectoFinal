@@ -1,0 +1,32 @@
+package com.mycompany.javaeat;
+
+public class ItemPedido {
+    
+    private Comida comida;
+    private int cantidad;
+
+    public ItemPedido(Comida comida, int cantidad) {
+        this.comida = comida;
+        this.cantidad = cantidad;
+    }
+
+    public Comida getComida() {
+        return comida;
+    }
+
+    public void setComida(Comida comida) {
+        this.comida = comida;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+    
+    public double getSubtotal(){
+        return comida.getPrecio()*cantidad;
+    }
+}
