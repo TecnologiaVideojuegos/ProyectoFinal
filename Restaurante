@@ -4,20 +4,20 @@ package com.mycompany.javaeat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Restaurante {
     private String nombre;
     private String CIF;
-    private Comida calificacion;
     private double gastosEnvio;
     private Direccion direccion;
     private Comida especialidad;
     private LocalDateTime tiempoEnvio;
     private Catering servicioCatering;
     private ArrayList<Comida> comidas = new ArrayList<>();
+    private List<Double> calificacionesList;
 
-
-    public Restaurante(String nombre, String CIF, Comida calificacion, double gastosEnvio, Direccion direccion, Comida especialidad, LocalDateTime tiempoEnvio, Catering servicioCatering) {
+    public Restaurante(String nombre, String CIF, double gastosEnvio, Direccion direccion, Comida especialidad, LocalDateTime tiempoEnvio, Catering servicioCatering) {
        
     if (CIF.matches("[A-HJNP-SUVW]{1}[0-9]{7}[0-9A-J]")) {
         this.CIF = CIF;
@@ -28,12 +28,11 @@ public class Restaurante {
         this.nombre = nombre;
         this.direccion = direccion;
         this.CIF= CIF;
-        this.calificacion = null;
-        this.gastosEnvio = 0.0;
+        this.gastosEnvio = gastosEnvio;
         this.tiempoEnvio = tiempoEnvio;
-        this.servicioCatering = null;
+        this.servicioCatering = servicioCatering;
         this.especialidad = especialidad;
-        this.comidas = new ArrayList<>();
+        this.calificacionesList= new ArrayList<>();
     }
                      
     public String getNombre() {
@@ -50,12 +49,6 @@ public class Restaurante {
 
     public void setCIF(String CIF) {
         this.CIF = CIF;
-    }
-
-
-    public void setCalificacion(Comida calificacion) {
-            this.calificacion = calificacion;
-        
     }
     
     public double getGastosEnvio() {
@@ -82,11 +75,11 @@ public class Restaurante {
         this.especialidad = especialidad;
     }
 
-    public int tiempoEnvio(){
+    public int tiempoEnvioEnMinutos(){
         LocalDateTime ahora = LocalDateTime.now();
         Duration duracion = Duration.between(ahora, tiempoEnvio);
         long minutos = duracion.toMinutes();
-        return Math.round(minutos);
+        return Math.toIntExact(minutos);
     }
 
     public Catering getServicioCatering() {
@@ -104,6 +97,42 @@ public class Restaurante {
         comida.setIndiceComida(indice);
         comidas.add(comida);
     }
+
+    // Actualiza la información de una comida existente
+    
+    public void actualizarComida(int indiceComida, Comida comida) {
+        comidas.set(indiceComida, comida);
+    }
+
+    // Elimina una comida del listado de comidas disponibles
+    public void eliminarComida(int indiceComida) {
+        comidas.remove(indiceComida);
+        for (int i = indiceComida; i < comidas.size(); i++) {
+            comidas.get(i).setIndiceComida(i);
+        }
+    }
+    private boolean validarCalificacion(double calificacion) {
+        return calificacion >= 0 && calificacion <= 5;
+    }
+    
+    public void introducirCalificacion(double calificacion) {
+        if (validarCalificacion(calificacion)) {
+            calificacionesList.add(calificacion);
+        } else {
+            throw new IllegalArgumentException("Calificación inválida");
+        }
+    }
+    public double relevancia() {
+        if (calificacionesList.isEmpty()) {
+            return 0;
+        }
+        double suma = 0;
+        for (double calificacion : calificacionesList) {
+            suma += calificacion;
+        }
+        return (double) suma / calificacionesList.size();
+    }   
+}
 
     // Actualiza la información de una comida existente
     
