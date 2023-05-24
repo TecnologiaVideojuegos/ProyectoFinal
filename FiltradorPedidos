@@ -1,0 +1,44 @@
+
+package com.mycompany.javaeat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+
+public class FiltradorPedidos {
+        
+    public List<Restaurante> filtrarCP (List<Restaurante> restaurantes, int CP){
+        List<Restaurante> restaurantes_filtrados = new ArrayList<>();
+       
+        for (Restaurante restaurante : restaurantes){
+            int codigoPostal = restaurante.getDireccion().getCodigoPostal();
+            
+            if (String.valueOf(codigoPostal).startsWith(String.valueOf(CP))){
+                restaurantes_filtrados.add(restaurante);    
+            }
+        }
+        return restaurantes_filtrados;
+    }
+    
+    public void ordenarRestaurantes (List<Restaurante> restaurantes){    
+        Collections.sort(restaurantes, (r1, r2)-> {
+            double calificacionMedia1 = r1.relevancia();
+            double calificacionMedia2 = r2.relevancia();
+            return Double.compare(calificacionMedia2, calificacionMedia1);        
+        
+        });
+    }
+    
+    public List<Restaurante> filtrarEspecialidad(List<Restaurante> restaurantes, String especialidad) {
+        List<Restaurante> restaurantes_filtrados = new ArrayList<>();
+       
+        for (Restaurante restaurante : restaurantes) {
+            if (restaurante.getEspecialidad().getEspecialidad().equals(especialidad)) {
+                restaurantes_filtrados.add(restaurante);    
+            }
+        }
+        
+        return restaurantes_filtrados;
+    }    
+    
+}
