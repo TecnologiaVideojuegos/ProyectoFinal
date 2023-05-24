@@ -1,7 +1,6 @@
 package com.mycompany.javaeat;
 
 import java.awt.Image;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Comida {
@@ -9,29 +8,28 @@ public class Comida {
 
     private int indiceComida;
     private String titulo;
-    private String[][]  ingredientes;
+    private List<String> ingredientes;
     private double precio;
     private Image foto;
-    private List<Integer> calificaciones;
     private String descripcion;
+    private String especialidad;
 
     
-    public Comida(int indiceComida, String titulo, String[] [] ingredientes, double precio, Image foto, String descripcion) {
+    public Comida(int indiceComida, String titulo, List<String> ingredientes, double precio, Image foto, String descripcion, String especialidad) {
         
         if (validarTitulo(titulo)) {
             this.titulo = titulo;
-            this.calificaciones = new ArrayList<>();
         } else {
             throw new IllegalArgumentException("Título inválido");
         }
  
-        this.calificaciones = new ArrayList<>();        
         this.indiceComida = indiceComida;
         this.titulo = titulo;
         this.ingredientes = ingredientes;
         this.precio = precio;
         this.foto = foto;
         this.descripcion = descripcion;
+        this.especialidad = especialidad;
     }
 
     public int getIndiceComida() {
@@ -59,40 +57,27 @@ public class Comida {
         this.titulo = titulo;
     }
 
-    public String[][] getIngredientes() {
+    public List<String> getIngredientes() {
         return ingredientes;
     }
 
-    public void setIngredientes(String[][] ingredientes) {
+    public void setIngredientes(List<String> ingredientes) {
         if (ingredientes == null) {
             System.out.println("No ha introducido ningun ingrediente");
             return;
         }
         this.ingredientes = ingredientes;
-}
-
-    private boolean validarCalificacion(int calificacion) {
-        return calificacion >= 0 && calificacion <= 5;
     }
     
-    public void introducirCalificacion(int calificacion) {
-        if (validarCalificacion(calificacion)) {
-            calificaciones.add(calificacion);
-        } else {
-            throw new IllegalArgumentException("Calificación inválida");
+    public void eliminarIngrediente ( String ingrediente){
+        if(ingredientes.contains(ingrediente)){
+        ingredientes.remove(ingrediente);
+        }
+        else{
+            System.out.println("El ingrediente que intenta eliminar no forma parte de este plato");
         }
     }
-    public double calcularMediaCalificaciones() {
-        if (calificaciones.isEmpty()) {
-            return 0;
-        }
-        int suma = 0;
-        for (int calificacion : calificaciones) {
-            suma += calificacion;
-        }
-        return (double) suma / calificaciones.size();
-    }   
-
+  
     public double getPrecio() {
         return precio;
     }
@@ -117,5 +102,8 @@ public class Comida {
         this.descripcion = descripcion;
     }
 
-
+    public String getEspecialidad(){
+        return especialidad;
+    }
 }
+
